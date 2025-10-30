@@ -1,116 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Console box giữa nội dung</title>
-<style>
-  body{
-    font-family: Inter, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    line-height:1.6;
-    padding:28px;
-    background:#f7faf7;
-    color:#0b1220;
-  }
-
-  /* container ví dụ có nhiều nội dung */
-  .article {
-    max-width:900px;
-    margin:0 auto;
-  }
-
-  h1{ margin-bottom:8px; }
-  p{ margin: 12px 0; color:#334155; }
-
-  /* console box (không fixed, sẽ flow trong tài liệu) */
-  .console-wrap{
-    border-radius:10px;
-    background: linear-gradient(180deg,#0b1220,#071324);
-    color:#e6eef6;
-    padding:12px;
-    box-shadow: 0 8px 24px rgba(2,6,23,0.08);
-    margin: 18px 0;
-    overflow:hidden;
-    display:block; /* vẫn là block trong flow */
-  }
-
-  /* header nhỏ chứa nút copy */
-  .console-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    margin-bottom:8px;
-  }
-  .console-title{
-    font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    font-size:13px;
-    color:#9fb7c9;
-  }
-
-  .copy-btn{
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.06);
-    color:#cfeff0;
-    padding:6px 10px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-  }
-
-  pre.console {
-    margin:0;
-    padding:14px;
-    border-radius:8px;
-    background: linear-gradient(180deg,#07121a,#06141f);
-    color:#dbeafe;
-    font-family: "SFMono-Regular", Menlo, Monaco, "Roboto Mono", monospace;
-    font-size:14px;
-    line-height:1.45;
-    white-space:pre-wrap;
-    overflow:auto;
-    max-height:320px;
-    border: 1px solid rgba(255,255,255,0.03);
-  }
-
-  /* optional small copied message */
-  .copied { font-size:13px; color:#34d399; opacity:0; transition:160ms; }
-  .copied.show { opacity:1; }
-
-  /* responsive: nếu cần hiển thị cạnh text, dùng inline-block (ví dụ class .console-inline) */
-  .console-inline { display:inline-block; vertical-align:top; width:48%; margin-right:2%; }
-
-  @media (max-width:680px){
-    .console-inline { width:100%; margin-right:0; display:block; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTOOL - Các công cụ chính thức</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .bg-gradient-hero {
+            background-image: linear-gradient(to right, #6b21a8, #8b5cf6, #3b82f6);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7p7k5Ua5x2z5w4pP1Bv1I5f8wz9P1+1+9z3p1V8y0+8r+p1F9bX5v5a7c1b+6p9k2y6n9g8jA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-  <div class="article">
-    <h1>Tiêu đề bài viết</h1>
-    <p>Đoạn mở đầu — mô tả nhanh. Bên dưới là một ô hiển thị mã nguồn/console, nhưng phần nội dung xung quanh vẫn hiển thị bình thường.</p>
+<body class="bg-gray-100">
 
-    <!-- Console block chèn giữa nội dung -->
-    <div class="console-wrap" aria-label="Mã ví dụ">
-      <div class="console-header">
-        <div class="console-title">Ví dụ: tính giai thừa (Python)</div>
-        <div style="display:flex;align-items:center;gap:10px">
-          <div id="copied1" class="copied" aria-hidden="true">Copied!</div>
-          <button class="copy-btn" data-target="consolePre1">Copy</button>
+    <header class="bg-gradient-hero text-white py-12 px-6 sm:px-12 rounded-b-2xl shadow-xl animate-fadeIn">
+        <div class="max-w-6xl mx-auto flex flex-col items-center text-center">
+            <h1 class="text-3xl sm:text-5xl font-bold mb-4">Chào mừng đến với CTOOL</h1>
+            <p class="text-lg sm:text-xl max-w-2xl mb-6">
+                Chọn công cụ bạn muốn tìm hiểu và cài đặt.
+            </p>
+            <div class="space-x-4">
+                <a href="#tools" class="bg-white text-blue-600 font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300">
+                    Xem các Tools
+                </a>
+            </div>
         </div>
-      </div>
+    </header>
 
-      <pre id="consolePre1" class="console" tabindex="0" aria-readonly="true">
-x = int(input("Nhập số cần tính giai thừa: "))
+    <section class="py-12 bg-white rounded-2xl shadow-lg -mt-10 mx-4 sm:mx-8 md:mx-12 lg:mx-20 animate-fadeIn" style="animation-delay: 0.2s;">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">Theo dõi chúng tôi</h2>
+            <div class="flex flex-wrap justify-center space-x-6">
+                <a href="https://www.tiktok.com/@ctool7929" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-black transform hover:scale-110 transition-transform duration-300 p-2">
+                    <i class="fab fa-tiktok text-4xl"></i>
+                    <span class="text-lg font-semibold">Kênh TikTok</span>
+                </a>
+                <a href="https://www.youtube.com/@CTOOL-NC" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-red-600 transform hover:scale-110 transition-transform duration-300 p-2">
+                    <i class="fab fa-youtube text-4xl"></i>
+                    <span class="text-lg font-semibold">Kênh YouTube</span>
+                </a>
+                <a href=https://zalo.me/g/qowvzu729 target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transform hover:scale-110 transition-transform duration-300 p-2">
+                    <i class="fas fa-comment-dots text-4xl"></i>
+                    <span class="text-lg font-semibold">Nhóm Zalo</span>
+                </a>
+                <a href="https://t.me/+PByWNy8hDxYzYTRl" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-blue-400 transform hover:scale-110 transition-transform duration-300 p-2">
+                    <i class="fab fa-telegram-plane text-4xl"></i>
+                    <span class="text-lg font-semibold">Nhóm Telegram</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-def fact(x):
-    if x == 0:
-        return 1
-    return x * fact(x - 1)
+    <section id="tools" class="py-16 px-4 sm:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-center text-2xl sm:text-3xl font-bold text-gray-800 mb-12">
+                Danh sách các Công cụ CTOOL
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center card-hover transform transition-all duration-300">
+                    <i class="fas fa-globe text-6xl text-purple-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">CTOOL XWORLD</h3>
+                    <p class="text-gray-600 mb-6">Công cụ hỗ trợ cho nền tảng XWorld. Hướng dẫn chi tiết cách cài đặt trên mọi thiết bị.</p>
+                    <a href="https://ntcong7929.github.io/xworld.html" class="mt-auto bg-purple-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-purple-700 transition-all duration-300">
+                        Nhấn vào đây
+                    </a>
+                </div>
 
-print(fact(x))
-      </pre>
-    </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center card-hover transform transition-all duration-300">
+                    <i class="fas fa-bomb text-6xl text-red-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">CTOOL BUMX</h3>
+                    <p class="text-gray-600 mb-6">Công cụ hỗ trợ cho nền tảng BumX. Tìm hiểu cách thiết lập và sử dụng công cụ hiệu quả nhất.</p>
+                    <a href="https://ntcong7929.github.io/bumx.html" class="mt-auto bg-red-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-red-700 transition-all duration-300">
+                        Nhấn vào đây
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12 rounded-t-2xl">
+        <div class="max-w-6xl mx-auto text-center text-sm">
+            <p>&copy; 2025 CTOOL. All rights reserved.</p>
+            <p>Được thiết kế bởi Gemini - Google</p>
+        </div>
+    </footer>
+
+</body>
+</html>    </div>
 
     <p>Đoạn nội dung tiếp theo — bạn có thể chèn nhiều ô console khác hoặc thêm ảnh, biểu đồ... mà không làm hỏng layout.</p>
 
